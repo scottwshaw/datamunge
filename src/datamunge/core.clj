@@ -1,8 +1,17 @@
 (ns datamunge.core
   (:use [midje.sweet :only (unfinished)])
-  (:require [clojure-csv.core :as csv]))
+  (:require [clojure.contrib.string :as ccs]
+            [clojure-csv.core :as csv]))
 
-(unfinished convert-date most-recent-meeting-with)
+(unfinished most-recent-meeting-with)
+
+
+(defn convert-date [month-year-string]
+  (let [month-number-map {"Apr" "04" "Oct" "10"}
+        month (ccs/take 3 month-year-string)
+        year (ccs/tail 2 month-year-string)]
+    (str "20" year "-" (get month-number-map month))))
+        
 
 (defn parse-csv-input-string [input-string]
   (map #(update-in % [:date] convert-date)
