@@ -25,3 +25,8 @@
 (fact (most-recent-meeting-with-a-murdoch "david-cameron-meetings.csv") => "2010-10"
   (provided (parse-data-file "david-cameron-meetings.csv") => ...parsed-file-map...
             (most-recent-meeting-with ...parsed-file-map... "Murdoch") => "2010-10"))
+
+(let [parsed-file-map [{:date "2010-04" :names "Rupert Murdoch " :organisation "News Corp" :cause "General discussion"}
+                       {:date "2010-10" :names "James Murdoch " :organisation "News Corp" :cause "Chequers"}
+                       {:date "2010-06" :names "Tony Gallagher " :organisation "Telegraph" :cause"Social "}]]
+  (fact (most-recent-meeting-with parsed-file-map "Murdoch") => (contains {:date "2010-10" :names "James Murdoch "})))
