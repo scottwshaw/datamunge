@@ -36,5 +36,5 @@
                        {:date "2010-06" :names "Tony Gallagher " :organisation "Telegraph" :cause"Social "}]]
   (fact (most-recent-meeting-with "Murdoch" parsed-file-map) => (contains {:date "2010-10" :names "James Murdoch "})))
 
-(fact (most-recent-meeting-with-a-murdoch "data/meetings.csv") => (contains {:date "2010-10"}))
+(future-fact (most-recent-meeting-with-a-murdoch "data/meetings.csv") => (contains {:date "2010-10"}))
 
