@@ -30,9 +30,11 @@
 (tabular 
  (fact (name-contains? ?name ?input-map) => ?result)
  :where
- | ?name   | ?input-map   | ?result
- | "roger" | {:names "sam"}        | falsey
- | "roger" | {:names "sam, roger"} | truthy)
+ | ?name   | ?input-map                    | ?result
+ | "roger" | {:names "sam"}                | falsey
+ | "roger" | {:names "sam roger"}          | truthy
+ | "roger" | {:names "sam roger, joe bob"} | truthy
+ | "roger" | {:names "roger sam"}          | falsey)
 
 (fact (most-recent-meeting-with-a-murdoch "david-cameron-meetings.csv") => "2010-10"
   (provided (parse-data-file "david-cameron-meetings.csv") => ...parsed-file-map...
@@ -43,5 +45,5 @@
                        {:date "2010-06" :names "Tony Gallagher " :organisation "Telegraph" :cause"Social "}]]
   (fact (most-recent-meeting-with "Murdoch" parsed-file-map) => (contains {:date "2010-10" :names "James Murdoch "})))
 
-(future-fact (most-recent-meeting-with-a-murdoch "data/meetings.csv") => (contains {:date "2010-10"}))
+(fact (most-recent-meeting-with-a-murdoch "data/meetings.csv") => (contains {:date "2010-11"}))
 
