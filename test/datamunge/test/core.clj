@@ -34,7 +34,9 @@
  | "roger" | {:names "sam"}                | falsey
  | "roger" | {:names "sam roger"}          | truthy
  | "roger" | {:names "sam roger, joe bob"} | truthy
- | "roger" | {:names "roger sam"}          | falsey)
+ | "roger" | {:names "roger sam"}          | falsey
+ | "roger" | {:names "joe bob, roger sam"} | falsey
+ | "roger" | {:names "joe bob, sam roger"} | truthy)
 
 (fact (most-recent-meeting-with-a-murdoch "david-cameron-meetings.csv") => "2010-10"
   (provided (parse-data-file "david-cameron-meetings.csv") => ...parsed-file-map...
