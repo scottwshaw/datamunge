@@ -17,8 +17,11 @@
 (defn parse-data-file [filename]
   (parse-csv-input-string (slurp filename)))
 
+(defn name-contains? [name input-map]
+  (ccs/substring? name (:names input-map)))
+
 (defn most-recent-meeting-with [name parsed-data-file]
-  (last (filter #(ccs/substring? name (:names %)) (sort-by :date parsed-data-file))))
+  (last (filter #(name-contains? name %) (sort-by :date parsed-data-file))))
 
 (defn most-recent-meeting-with-a-murdoch [filename]
   (let [data-map (parse-data-file filename)]

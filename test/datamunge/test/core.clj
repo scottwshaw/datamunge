@@ -27,6 +27,13 @@
   (provided (slurp ...file-name...) => ...input-string...
             (parse-csv-input-string ...input-string...) => ...parsed-file-map...))
 
+(tabular 
+ (fact (name-contains? ?name ?input-map) => ?result)
+ :where
+ | ?name   | ?input-map   | ?result
+ | "roger" | {:names "sam"}        | falsey
+ | "roger" | {:names "sam, roger"} | truthy)
+
 (fact (most-recent-meeting-with-a-murdoch "david-cameron-meetings.csv") => "2010-10"
   (provided (parse-data-file "david-cameron-meetings.csv") => ...parsed-file-map...
             (most-recent-meeting-with "Murdoch" ...parsed-file-map...) => "2010-10"))
