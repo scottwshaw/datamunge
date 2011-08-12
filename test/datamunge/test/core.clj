@@ -2,9 +2,14 @@
   (:use [datamunge.core])
   (:use clojure.test midje.sweet))
 
-(facts
-  (convert-date "Apr, 10") => "2010-04"
-  (convert-date "Oct, 10") => "2010-10")
+(tabular 
+ (fact
+   (convert-date ?word-date) => ?number-date)
+ :where
+ | ?word-date | ?number-date
+ | "Jan, 11"  | "2011-01"
+ | "Apr, 10"  | "2010-04"
+ | "Oct, 10"  | "2010-10")
 
 (def input-string
   (str "\"Apr, 10\",\"Rupert Murdoch \",\"News Corp\",\"General discussion\"
@@ -24,9 +29,12 @@
 
 (fact (most-recent-meeting-with-a-murdoch "david-cameron-meetings.csv") => "2010-10"
   (provided (parse-data-file "david-cameron-meetings.csv") => ...parsed-file-map...
-            (most-recent-meeting-with ...parsed-file-map... "Murdoch") => "2010-10"))
+            (most-recent-meeting-with "Murdoch" ...parsed-file-map...) => "2010-10"))
 
 (let [parsed-file-map [{:date "2010-04" :names "Rupert Murdoch " :organisation "News Corp" :cause "General discussion"}
                        {:date "2010-10" :names "James Murdoch " :organisation "News Corp" :cause "Chequers"}
                        {:date "2010-06" :names "Tony Gallagher " :organisation "Telegraph" :cause"Social "}]]
-  (fact (most-recent-meeting-with parsed-file-map "Murdoch") => (contains {:date "2010-10" :names "James Murdoch "})))
+  (fact (most-recent-meeting-with "Murdoch" parsed-file-map) => (contains {:date "2010-10" :names "James Murdoch "})))
+
+(fact (most-recent-meeting-with-a-murdoch "data/meetings.csv") => (contains {:date "2010-10"}))
+

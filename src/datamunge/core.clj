@@ -4,7 +4,8 @@
             [clojure-csv.core :as csv]))
 
 (defn convert-date [month-year-string]
-  (let [month-number-map {"Apr" "04" "Oct" "10"}
+  (let [month-number-map {"Jan" "01" "Feb" "02" "Mar" "03" "Apr" "04" "May" "05" "Jun" "06"
+                          "Jul" "07" "Aug" "08" "Sep" "09" "Oct" "10" "Nov" "11" "Dec" "12"}
         month (ccs/take 3 month-year-string)
         year (ccs/tail 2 month-year-string)]
     (str "20" year "-" (get month-number-map month "00"))))
@@ -16,10 +17,10 @@
 (defn parse-data-file [filename]
   (parse-csv-input-string (slurp filename)))
 
-(defn most-recent-meeting-with [parsed-data-file name]
+(defn most-recent-meeting-with [name parsed-data-file]
   (last (filter #(ccs/substring? name (:names %)) (sort-by :date parsed-data-file))))
 
 (defn most-recent-meeting-with-a-murdoch [filename]
   (let [data-map (parse-data-file filename)]
-    (most-recent-meeting-with data-map "Murdoch")))
+    (most-recent-meeting-with "Murdoch" data-map)))
 
