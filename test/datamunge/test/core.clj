@@ -47,3 +47,9 @@
 
 (fact (most-recent-meeting-with-a-murdoch "data/meetings.csv") => (contains {:date "2010-11"}))
 
+;;; 1. create future fact
+;;; 2. refactor out the name-contains? predicate
+;;; 2.a create a tabular fact to test the predicate
+;;; 3. add a firstname lastname that causes a failure
+;;; 4. change to regular expression \w+\s
+;;; 5. make the future-fact into a present fact
